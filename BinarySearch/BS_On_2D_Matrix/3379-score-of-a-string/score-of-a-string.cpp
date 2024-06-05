@@ -1,18 +1,14 @@
 class Solution {
 public:
-    int absolute(int n){
-        if(n<0){
-            return -n;
-        }
-        else
-            return n;
-    }
     int scoreOfString(string s) {
-        int score =0;
-        for(int i=0;i<=s.size()-2;i++){
-            int diff = s[i]-s[i+1];
-            score += absolute(diff);
+        
+        int ans = 0;
+
+        for(int i=0;i<s.length() - 1;i++)
+        {
+            ans += abs(int(s[i]) - int(s[i+1]));
         }
-        return score;
+
+        return ans;
     }
 };
