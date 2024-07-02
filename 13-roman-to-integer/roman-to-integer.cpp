@@ -14,6 +14,7 @@ public:
     }
 
     int romanToInt(string s) {
+        // The key intuition lies in the fact that in Roman numerals, when a smaller value appears before a larger value, it represents subtraction, while when a smaller value appears after or equal to a larger value, it represents addition.
         int ans = 0;
         for (int i = 0; i < s.size(); i++) {
             if (i + 1 < s.size() && getRomanValue(s[i]) < getRomanValue(s[i + 1])) {
