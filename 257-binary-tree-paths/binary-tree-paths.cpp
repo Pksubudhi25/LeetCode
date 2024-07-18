@@ -12,26 +12,24 @@
 class Solution {
 public:
     
-    void Paths(TreeNode* root,string path,vector<string>& V )
-    {
-        if(!root )return ;
+    void pathFinder(TreeNode*root, string currentPath, vector<string>& res){
+        if(!root) return;
+        if(root->left == NULL &&  root->right==NULL){
+            currentPath += to_string(root->val);
+            res.push_back(currentPath);
+            return;
+        }
 
-        path+=to_string(root->val);
+        currentPath += to_string(root->val)+"->";
         
-        if(!root->left && !root->right)              
-            V.push_back(path);
+        if(root->left) pathFinder(root->left,currentPath,res);
+        if(root->right) pathFinder(root->right,currentPath,res);
         
-        path+="->";
-        Paths(root->left,path,V);
-        Paths(root->right,path,V);
-
     }
 
-
-
     vector<string> binaryTreePaths(TreeNode* root) {
-        vector<string> V;
-        Paths(root,"",V);
-        return V;
+        vector<string> res;
+        pathFinder(root,"",res);
+        return res;
     }
 };
