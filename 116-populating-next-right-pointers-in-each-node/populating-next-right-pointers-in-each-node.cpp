@@ -19,23 +19,18 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        if(!root) return NULL;
-        queue<Node *> q;
-        q.push(root);
-        
-        while(!q.empty())
-        {
-            int size = q.size();
-            for(int i=0;i<size;i++){
-                Node* node = q.front();
-                q.pop();
-                if(i < size-1)
-                    node->next = q.front();
-                if(node->left)
-                    q.push(node->left);
-                if(node->right)
-                    q.push(node->right); 
-
+        if(!root) return nullptr;
+        queue<Node*> q;
+        q.push(root);        
+        while(size(q)) {
+            Node* rightNode = nullptr;                    // set rightNode to null initially
+            for(int i = size(q); i; i--) {                // traversing each level
+                auto cur = q.front(); q.pop();            // pop a node from current level and,
+                cur -> next = rightNode;                  // set its next pointer to rightNode
+                rightNode = cur;                          // update rightNode as cur for next iteration
+                if(cur -> right)                          // if a child exists
+                    q.push(cur -> right),                 // IMP: push right first to do right-to-left BFS
+                    q.push(cur -> left);                  // then push left
             }
         }
         return root;
