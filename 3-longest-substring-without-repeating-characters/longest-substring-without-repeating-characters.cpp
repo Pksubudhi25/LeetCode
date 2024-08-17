@@ -1,18 +1,24 @@
 class Solution {
 public:
+
     int lengthOfLongestSubstring(string s) {
-        vector<bool> count(256,0);
-        int first=0,second=0,len=0;
-        while(second < s.size()){
-            // repeating character
-            while(count[s[second]]){
-                count[s[first]] = 0;
-                first++;
+        int n = s.length();
+        unordered_map<char, int> hash;
+        int left = 0;
+        int right = 0;
+        int maxLen = 0;
+        while(right < n){
+            // If the character is completely new or the previous occurance is not in our window
+            if(hash.find(s[right])==hash.end() || hash[s[right]] < left){
+                hash[s[right]] = right;
+                maxLen = max(maxLen, right-left+1);
+                right++;       
             }
-            count[s[second]] = 1;
-            len = max(len,second-first+1);
-            second++;
+            // We update the window to go to the position where there are no repeating occurances of any character. 
+            else{
+                left = hash[s[right]]+1;
+            }
         }
-        return len;
+        return maxLen;
     }
 };
